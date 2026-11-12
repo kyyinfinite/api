@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { createTestApp, fakeProviderFetch, jsonResponse } from '../helpers'
+import { createTestApp, fakeProviderFetch, jsonResponse, readJson } from '../helpers'
 
 describe('migrated public API registry', () => {
 
   it('publishes the full migrated catalog as free and keyless', async () => {
     const { app } = createTestApp()
     const response = await app.request('/api/v1/endpoints')
-    const body = await response.json()
+    const body = await readJson(response)
     const endpoints = body.data.endpoints as Array<Record<string, unknown>>
 
     expect(endpoints).toHaveLength(85)
@@ -22,7 +22,7 @@ describe('migrated public API registry', () => {
     const { app } = createTestApp({ fetchImpl: fake.fetchImpl })
 
     const response = await app.request('/api/v1/search/applemusic?q=laufey')
-    const body = await response.json()
+    const body = await readJson(response)
 
     expect(response.status).toBe(200)
     expect(body.status).toBe('success')
@@ -38,11 +38,11 @@ describe('migrated public API registry', () => {
     ['deepsearch', '/ai/deepsearch'],
     ['gemini', '/ai/gemini'],
   ])('routes the %s AI endpoint to Nexray', async (name, upstreamPath) => {
-    const fake = fakeProviderFetch((url) => jsonResponse({ status: true, result: { answer: `reply from ${name}` } }))
+    const fake = fakeProviderFetch(() => jsonResponse({ status: true, result: { answer: `reply from ${name}` } }))
     const { app } = createTestApp({ fetchImpl: fake.fetchImpl })
 
     const response = await app.request(`/api/v1/ai/${name}?text=hallo`)
-    const body = await response.json()
+    const body = await readJson(response)
 
     expect(response.status).toBe(200)
     expect(body.status).toBe('success')
@@ -72,7 +72,7 @@ describe('migrated public API registry', () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: 'developer@example.com' }),
     })
-    const body = await response.json()
+    const body = await readJson(response)
 
     expect(response.status).toBe(503)
     expect(body.error.type).toBe('SERVICE_UNAVAILABLE')

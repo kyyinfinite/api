@@ -47,6 +47,12 @@ export function fakeProviderFetch(
   return { fetchImpl, calls }
 }
 
+export type JsonBody = Record<string, any>
+
+export async function readJson(response: Response): Promise<JsonBody> {
+  return (await response.json()) as JsonBody
+}
+
 export function jsonResponse(body: unknown, status = 200, headers: Record<string, string> = {}): Response {
   return new Response(JSON.stringify(body), {
     status,

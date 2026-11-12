@@ -1,4 +1,4 @@
-import type { ApiRequestConfig } from '@/services/api/api.types'
+import type { ApiRequestConfig } from './api.types'
 
 export const HISTORY_STORAGE_KEY = 'kyyinfinite.playground.history.v1'
 export const HISTORY_MAX_ENTRIES = 20
@@ -26,7 +26,11 @@ export interface HistoryResult {
   error: string | null
 }
 
-type StorageLike = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
+export interface StorageLike {
+  getItem(key: string): string | null
+  setItem(key: string, value: string): void
+  removeItem(key: string): void
+}
 
 export function sanitizeRequest(config: ApiRequestConfig): StoredRequest {
   const headers = Object.fromEntries(

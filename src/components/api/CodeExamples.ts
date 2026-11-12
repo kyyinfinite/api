@@ -1,12 +1,15 @@
-import type { ApiEndpoint, ApiRequestConfig } from '@/services/api/api.types'
+import type { ApiRequestConfig } from '../../services/api/api.types'
 
 export interface SnippetOptions {
   binary?: boolean
 }
 
-export function isBinaryEndpoint(
-  endpoint: Pick<ApiEndpoint, 'responseSchema' | 'responseExample'>,
-): boolean {
+export interface BinaryProbe {
+  responseSchema: ReadonlyArray<{ name: string }>
+  responseExample?: { status?: unknown } | null
+}
+
+export function isBinaryEndpoint(endpoint: BinaryProbe): boolean {
   if (endpoint.responseExample?.status === 'binary') return true
   return endpoint.responseSchema.some((field) => field.name === '(binary)')
 }
