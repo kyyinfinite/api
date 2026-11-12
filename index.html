@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kyyinfinite | Free APIs. Limitless Possibilities.</title>
+    <meta
+      name="description"
+      content="Explore Kyyinfinite, a collection of free public APIs built to help you create, experiment, and bring ideas to life. No API keys or sign-up required."
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M8 4h9v13l10-13h10L25 20l12 16H27L17 23v13H8V4z' fill='%23111318'/%3E%3Cpath d='M17 4h9l-9 13v-8l6-5h-6V4z' fill='%233457D5'/%3E%3C/svg%3E"
+    />
+    <script>
+      (function () {
+        try {
+          if (
+            !sessionStorage.getItem('ky-intro-seen') &&
+            !matchMedia('(prefers-reduced-motion: reduce)').matches
+          ) {
+            document.documentElement.classList.add('is-intro')
+          }
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
