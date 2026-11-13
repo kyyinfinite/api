@@ -19,13 +19,13 @@ Free APIs. Limitless Possibilities. Kyyinfinite gives developers, students, and 
 | Database | Supabase PostgreSQL (service-role access from the backend only, RLS enabled) |
 | Auth | Supabase Auth (admin dashboard only; public API requires no credentials) |
 | Caching | In-process TTL cache with single-flight + CDN `s-maxage`; Upstash Redis optional for shared rate limiting |
-| Deployment | One Vercel project, one backend Function (`api/[...path].ts`) |
+| Deployment | One Vercel project, one backend Function (`api/index.ts`) |
 
 ## Repository layout
 
 ```
 api/
-  [...path].ts               Vercel entry point for the backend Function
+  index.ts                         Vercel entry point for the backend Function
 backend/
   app.ts                     Hono assembly: middleware, admin routes, dispatcher
   config/env.ts              Zod-validated environment configuration
@@ -153,7 +153,7 @@ Without Supabase, the backend starts with a seeded in-memory catalog. Every rout
 
 1. Import the repository as a single Vercel project (framework: Vite).
 2. Set the environment variables from the table above.
-3. Deploy. The build runs `tsc` for both frontend and backend, builds `dist/`, and registers exactly one Function: `api/[...path].ts`.
+3. Deploy. The build runs `tsc` for both frontend and backend, builds `dist/`, and registers exactly one Function: `api/index.ts`.
 4. Verify `GET /api/v1/tools/info` returns the success envelope on the deployment domain.
 5. Optionally set `CRON_SECRET` so the daily cron can purge old usage logs.
 
